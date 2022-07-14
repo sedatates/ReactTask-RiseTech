@@ -4,12 +4,13 @@ import styles from "./styles.module.scss";
 type Props = {
   text: string;
   subText?: string;
+  style?: any;
 };
 
-const RiseTechText: React.FC<Props> = ({ text, subText }) => {
+const RiseTechText: React.FC<Props> = ({ text, subText, style }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.text}>{text}</div>
+      <div className={style}>{text}</div>
       {subText && <div className={styles.subText}>{subText}</div>}
     </div>
   );

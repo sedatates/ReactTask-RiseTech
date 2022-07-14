@@ -14,7 +14,11 @@
   justify-content: center;
   align-items: center;
 }
-
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
 .header {
   width: 100%;
   display: flex;
@@ -35,6 +39,20 @@
   align-self: center;
 }
 
-.input {
-  width: 100%;
+.newTaskInner{
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
+
+@media screen and (max-width: 600px) {
+  .newTaskInner{
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  } 
+}
+
+  
+
+  

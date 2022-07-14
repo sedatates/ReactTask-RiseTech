@@ -5,31 +5,32 @@ import {
   NativeSelect,
   Select,
 } from "@mui/material";
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import boxOptions from "../../resources/dropdownOptions";
+import styles from "./styles.module.scss";
 
 type Props = {
   label: string;
-  name: string;
+
   onChange: Function;
-  value: string;
-  width: string;
 };
 
-const PureHomePicker: React.FC<Props> = ({ label, name, onChange, width }) => {
-  const [selected, setSelected] = useState("");
+const PureHomePicker: React.FC<Props> = ({ label, onChange }) => {
   const options = boxOptions;
 
   return (
-    <FormControl className={width}>
-      <Select defaultValue={options[1].key}>
-        {options.map((option) => (
-          <MenuItem key={option.key} value={option.key}>
-            {option.value}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <div className={styles.container}>
+      <div className={styles.title}>{label}</div>
+      <FormControl onChange={onChange}>
+        <Select defaultValue={options[1].key} className={styles.input}>
+          {options.map((option) => (
+            <MenuItem key={option.key} value={option.key}>
+              {option.value}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
   );
 };
 

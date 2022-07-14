@@ -7,3 +7,22 @@
   border-bottom: 1px solid #e6e6e6;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
+.title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: gray;
+  margin-bottom: 0.5rem;
+  ::placeholder {
+    color: red;
+  }
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: gray;
+  margin-bottom: 0.5rem;
+  ::placeholder {
+    color: red;
+  }
+}

@@ -9,6 +9,7 @@ import {
   RiseTechInput,
   RiseTechText,
 } from "../components";
+import RiseTechButton from "../components/RiseTechButton";
 
 /* const dispatch = useAppDispatch();
   useEffect(() => {}, []);
@@ -23,18 +24,8 @@ const Home: NextPage = () => {
   const [newTodo, setNewTodo] = useState<string>("");
   const [newTodoUrgent, setNewTodoUrgent] = useState<string>("");
   const [todos, setTodos] = useState<string[]>([]);
-  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_SERVICES" });
-    dispatch({ type: "FETCH_CATEGORIES" });
-  }, []);
-
-  const { services, categoriesState } = useAppSelector((reducer: any) => ({
-    services: reducer.service.items,
-    categoriesState: reducer.category.items,
-  }));
-
+  console.log(newTodo, newTodoUrgent);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTodo(e.target.value);
   };
@@ -52,21 +43,16 @@ const Home: NextPage = () => {
       </div>
 
       <div className={styles.newTaskContainer}>
-        <RiseTechText text="Create New Job" />
-        <RiseTechInput
-          title="Job Name"
-          placeholder="Please Enter Job Name"
-          value={newTodo}
-          onChange={setNewTodo}
-          width="w80"
-        />
-        <RiseTechDropdown
-          label="Job Priority"
-          name="sedat"
-          onChange={setNewTodoUrgent}
-          width="w20"
-          value="sedat"
-        />
+        <RiseTechText text="Create New Job" style={styles.title} />
+        <div className={styles.newTaskInner}>
+          <RiseTechInput
+            title="Job Name"
+            value={newTodo}
+            onChange={setNewTodo}
+          />
+          <RiseTechDropdown label="Job Priority" onChange={setNewTodoUrgent} />
+          <RiseTechButton buttonText="Create" />
+        </div>
       </div>
     </div>
   );
