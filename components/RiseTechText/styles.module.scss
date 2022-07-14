@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: gray;
+  margin-bottom: 0.5rem;
+  ::placeholder {
+    color: red;
+  }
+}
+
+.subText {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: gray;
+  margin-bottom: 0.5rem;
+  ::placeholder {
+    color: red;
+  }
+}

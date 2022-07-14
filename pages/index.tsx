@@ -1,27 +1,73 @@
 import type { NextPage } from "next";
 
-import Image from "next/image";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  RiseTechDropdown,
+  RiseTechHeader,
+  RiseTechInput,
+  RiseTechText,
+} from "../components";
 
-import Logo from "../public/logo.svg";
-import RiseTechHeader from "../components";
-
-const Home: NextPage = () => {
-  const dispatch = useAppDispatch();
-
+/* const dispatch = useAppDispatch();
   useEffect(() => {}, []);
 
   const { services, categoriesState } = useAppSelector((reducer: any) => ({
     services: reducer.service.items,
     categoriesState: reducer.category.items,
   }));
+   */
+
+const Home: NextPage = () => {
+  const [newTodo, setNewTodo] = useState<string>("");
+  const [newTodoUrgent, setNewTodoUrgent] = useState<string>("");
+  const [todos, setTodos] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_SERVICES" });
+    dispatch({ type: "FETCH_CATEGORIES" });
+  }, []);
+
+  const { services, categoriesState } = useAppSelector((reducer: any) => ({
+    services: reducer.service.items,
+    categoriesState: reducer.category.items,
+  }));
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodo(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTodos([...todos, newTodo]);
+    setNewTodo("");
+  };
+
   return (
     <div className={styles.container}>
-      <RiseTechHeader title="RiseTech" subtitle="React Task" />
-      <Image src={Logo} width={50} height={50} alt="risetechlogo" />
+      <div className={styles.header}>
+        <RiseTechHeader title="RiseTech" subtitle="React Task" />
+      </div>
+
+      <div className={styles.newTaskContainer}>
+        <RiseTechText text="Create New Job" />
+        <RiseTechInput
+          title="Job Name"
+          placeholder="Please Enter Job Name"
+          value={newTodo}
+          onChange={setNewTodo}
+          width="w80"
+        />
+        <RiseTechDropdown
+          label="Job Priority"
+          name="sedat"
+          onChange={setNewTodoUrgent}
+          width="w20"
+          value="sedat"
+        />
+      </div>
     </div>
   );
 };
