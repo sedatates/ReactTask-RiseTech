@@ -1,15 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import serviceSlice  from "./features/serviceSlice";
-import categorySlice from "./features/categorySlice";
+import todosSlice from "./features/todosSlice";
 
 export const store = configureStore({
   reducer: {
-    service: serviceSlice,
-    category: categorySlice,
+    todos: todosSlice,
   },
 });
 
-
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;

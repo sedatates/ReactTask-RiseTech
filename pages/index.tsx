@@ -25,16 +25,7 @@ const Home: NextPage = () => {
   const [newTodoUrgent, setNewTodoUrgent] = useState<string>("");
   const [todos, setTodos] = useState<string[]>([]);
 
-  console.log(newTodo, newTodoUrgent);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTodo(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setTodos([...todos, newTodo]);
-    setNewTodo("");
-  };
+  console.log("todo", newTodo, "urgen", newTodoUrgent);
 
   return (
     <div className={styles.container}>
@@ -52,6 +43,19 @@ const Home: NextPage = () => {
           />
           <RiseTechDropdown label="Job Priority" onChange={setNewTodoUrgent} />
           <RiseTechButton buttonText="Create" />
+        </div>
+      </div>
+
+      <div className={styles.todoListContainer}>
+        <RiseTechText text="Todo List" style={styles.title} />
+        <div className={styles.todoListInner}>
+          <div className={styles.todoList}>
+            {todos.map((todo, index) => (
+              <div key={index} className={styles.todo}>
+                {todo}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

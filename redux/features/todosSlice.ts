@@ -11,7 +11,7 @@ export const getCategory = createAsyncThunk(
   },
 );
 
-const categorySlice = createSlice({
+const todosSlice = createSlice({
   name: 'category',
   initialState: {
     items: [],
@@ -39,5 +39,5 @@ const categorySlice = createSlice({
   },
 });
 
-export const {addCategory} = categorySlice.actions;
-export default categorySlice.reducer;
+export const {addCategory} = todosSlice.actions;
+export default todosSlice.reducer;
