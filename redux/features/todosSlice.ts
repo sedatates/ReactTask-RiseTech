@@ -51,7 +51,6 @@ const todosSlice = createSlice({
       localStorage.setItem("todos", JSON.stringify(state.items));
     },
     persistLocal: (state, action) => {
-      console.log("persistLocal", action.payload);
       state.items = action.payload;
     },
   },
