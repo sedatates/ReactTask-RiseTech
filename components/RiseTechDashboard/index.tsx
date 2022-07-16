@@ -9,6 +9,19 @@ type Props = {
 };
 
 const RiseTechDashboard: React.FC<Props> = ({ data, deleteTodo, editTodo }) => {
+  const priortyBackgroundColor = (priority: string) => {
+    switch (priority) {
+      case "Urgent":
+        return "urgent";
+      case "Important":
+        return "important";
+      case "Regular":
+        return "regular";
+      default:
+        return styles.lowPriority;
+    }
+  };
+
   return (
     <div className={styles.container}>
       <table className={styles.dashboard}>
@@ -20,15 +33,16 @@ const RiseTechDashboard: React.FC<Props> = ({ data, deleteTodo, editTodo }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((row: any) => (
+          {data?.map((row: any) => (
             <tr key={row.name} className={styles.cell}>
               <td className={styles.item1}>{row.jobName}</td>
-              <td className={styles.item2}>{row.jobUrgency}</td>
+              <td className={styles.item2}>
+                <div className={priortyBackgroundColor(row.jobUrgency)}>
+                  {row.jobUrgency}
+                </div>
+              </td>
               <td className={styles.item3}>
-                <RiseTechButton
-                  type="edit"
-                  onClick={() => editTodo(row)}
-                />
+                <RiseTechButton type="edit" onClick={() => editTodo(row)} />
                 <RiseTechButton type="delete" onClick={() => deleteTodo(row)} />
               </td>
             </tr>

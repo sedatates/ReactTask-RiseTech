@@ -1,6 +1,7 @@
 .container {
   display: flex;
   width: fit-content;
+  max-height: 5.5rem;
 }
 
 .button {
@@ -11,4 +12,3 @@
   font-size: 1rem;
   font-weight: 300;
 }
-

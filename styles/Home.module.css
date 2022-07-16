@@ -39,20 +39,22 @@
   align-self: center;
 }
 
-.newTaskInner{
+.newTaskInner {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
-
-@media screen and (max-width: 600px) {
-  .newTaskInner{
+.filterContainer {
+  display: flex;
+  background-color: aquamarine;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .newTaskInner {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-  } 
+  }
 }
-
-  
-
-  

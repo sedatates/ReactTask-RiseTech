@@ -6,10 +6,14 @@ type Props = {
   placeholder?: string;
   value: string;
   onChange: Function;
+  subtext?: string;
+  alertvisible?: boolean;
 };
 
 const RiseTechInput: React.FC<Props> = ({
   title,
+  alertvisible,
+  subtext,
   placeholder,
   value,
   onChange,
@@ -23,6 +27,9 @@ const RiseTechInput: React.FC<Props> = ({
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
+     
+        {alertvisible && <div className="alertText">{subtext}</div>}
+      
     </div>
   );
 };

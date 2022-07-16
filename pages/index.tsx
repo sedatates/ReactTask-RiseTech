@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+
 import {
   RiseTechDashboard,
   RiseTechDialog,
@@ -12,18 +12,27 @@ import {
   RiseTechText,
 } from "../components";
 import RiseTechButton from "../components/RiseTechButton";
-
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addTodo, deleteTodo, editTodo } from "../redux/features/todosSlice";
+import { setTimeout } from "timers";
+const { v4: uuidv4 } = require("uuid");
 
 const Home: NextPage = () => {
   const [newTodo, setNewTodo] = useState<string>("");
   const [newTodoUrgent, setNewTodoUrgent] = useState<string>("Choose");
+
+  const [filter, setFilter] = useState<string>("All");
+  const [searchText, setSearchText] = useState<string>("");
+
   const [isEditingDialogVisible, setIsEditingDialogVisible] =
     useState<boolean>(false);
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] =
     useState<boolean>(false);
+
   const [editingTodo, setEditingTodo] = useState<any>({});
   const [deletingTodo, setDeletingTodo] = useState<any>({});
+
+  const [alertvisible, setAlertvisible] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -32,25 +41,58 @@ const Home: NextPage = () => {
     wholeState: reducer,
   }));
 
-  useEffect(() => {}, [wholeState]);
+  const [todos, setTodos] = useState<any>();
 
-  const sortingTodos = (todos: any) => {
-    return todos.sort((a: any, b: any) => {
-      if (a.jobUrgency === "Urgent") {
-        return -1;
-      } else if (b.jobUrgency === "Urgent") {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+  useEffect(() => {
+    sortingTodos(todosState, filter, searchText);
+  }, [todosState, filter, searchText]);
+
+  const sortingTodos = (
+    todos: Array<any>,
+    filter: string,
+    searchText: string
+  ) => {
+    const sortedTodos = [];
+
+    if (filter === "All" || filter === "Urgent") {
+      sortedTodos.push(
+        ...todos.filter((todo: any) => todo.jobUrgency === "Urgent")
+      );
+    }
+    if (filter === "All" || filter === "Important") {
+      sortedTodos.push(
+        ...todos.filter((todo: any) => todo.jobUrgency === "Important")
+      );
+    }
+    if (filter === "All" || filter === "Regular") {
+      sortedTodos.push(
+        ...todos.filter((todo: any) => todo.jobUrgency === "Regular")
+      );
+    }
+
+    if (searchText !== "") {
+      const findedTodos = sortedTodos.filter((todo) => {
+        return todo.jobName.toLowerCase().includes(searchText.toLowerCase());
+      });
+
+      setTodos(findedTodos);
+    } else setTodos(sortedTodos);
   };
 
   const handleCreateTodo = () => {
     if (newTodo.length > 0 && newTodoUrgent !== "Choose") {
-      const param = { jobName: newTodo, jobUrgency: newTodoUrgent };
+      const param = {
+        jobId: uuidv4(),
+        jobName: newTodo,
+        jobUrgency: newTodoUrgent,
+      };
       dispatch(addTodo(param));
       setNewTodo("");
+    } else {
+      setAlertvisible(true);
+      setTimeout(() => {
+        setAlertvisible(false);
+      }, 2000);
     }
   };
 
@@ -77,11 +119,14 @@ const Home: NextPage = () => {
             title="Job Name"
             value={newTodo}
             onChange={setNewTodo}
+            subtext="Please enter job name"
+            alertvisible={alertvisible}
           />
           <RiseTechDropdown
             label="Job Priority"
             onChange={setNewTodoUrgent}
             value={newTodoUrgent}
+            type="box"
           />
           <RiseTechButton
             buttonText="Create"
@@ -93,8 +138,12 @@ const Home: NextPage = () => {
 
       <div className={styles.todoListContainer}>
         <RiseTechText text="Job List" style={styles.title} />
+        <div className={styles.filterContainer}>
+          <RiseTechInput onChange={setSearchText} placeholder="Job Name" />
+          <RiseTechDropdown onChange={setFilter}></RiseTechDropdown>
+        </div>
         <RiseTechDashboard
-          data={todosState}
+          data={todos}
           deleteTodo={(item) => {
             setIsDeleteDialogVisible(true);
             setDeletingTodo(item);
@@ -118,9 +167,8 @@ const Home: NextPage = () => {
         type="edit"
         handleClose={() => setIsEditingDialogVisible(false)}
         handleSubmit={() => handleEditTodo(editingTodo)}
-        onChange={(e) =>
-          setEditingTodo({ ...editingTodo, [jobName]: e.target.value })
-        }
+        onChange={(e) => setEditingTodo({ ...editingTodo, ["jobUrgency"]: e })}
+        disabled={editingTodo.jobUrgency === "Choose"}
       />
     </div>
   );

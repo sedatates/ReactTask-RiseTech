@@ -8,6 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AttentionIcon from "@mui/icons-material/ErrorOutline";
 
+import { RiseTechDropdown } from "..";
+
 import styles from "./styles.module.scss";
 
 type Props = {
@@ -15,7 +17,8 @@ type Props = {
   handleSubmit: () => void;
   handleClose: () => void;
   type: "edit" | "delete";
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 };
 
 const FormDialog: React.FC<Props> = ({
@@ -24,6 +27,7 @@ const FormDialog: React.FC<Props> = ({
   handleClose,
   type,
   onChange,
+  disabled,
 }) => {
   return (
     <div>
@@ -32,19 +36,15 @@ const FormDialog: React.FC<Props> = ({
           <DialogTitle sx={{ textAlign: "center" }}>
             <AttentionIcon sx={{ height: 50, width: 50 }} />
           </DialogTitle>
-          <DialogContent sx={{ textAlign: "center" }}>
+          <DialogContent
+            sx={{
+              textAlign: "center",
+            }}
+          >
             <DialogContentText sx={{ fontSize: 25 }}>
               Are You Sure?
             </DialogContentText>
-            {type === "edit" ? (
-              <TextField
-                onChange={onChange}
-                autoFocus
-                margin="dense"
-                fullWidth
-                variant="standard"
-              />
-            ) : null}
+            {type === "edit" ? <RiseTechDropdown onChange={onChange} /> : null}
           </DialogContent>
           <DialogActions>
             <Button sx={{ color: "black" }} onClick={handleClose}>
@@ -54,6 +54,7 @@ const FormDialog: React.FC<Props> = ({
               sx={{ width: 100 }}
               className={styles.approveButton}
               onClick={handleSubmit}
+              disabled={disabled}
             >
               Approve
             </Button>
