@@ -13,8 +13,14 @@ import {
 } from "../components";
 import RiseTechButton from "../components/RiseTechButton";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { addTodo, deleteTodo, editTodo } from "../redux/features/todosSlice";
+import {
+  addTodo,
+  deleteTodo,
+  editTodo,
+  persistLocal,
+} from "../redux/features/todosSlice";
 import { setTimeout } from "timers";
+import { useFocusEffect } from "@react-navigation/native";
 const { v4: uuidv4 } = require("uuid");
 
 const Home: NextPage = () => {
@@ -42,10 +48,20 @@ const Home: NextPage = () => {
   }));
 
   const [todos, setTodos] = useState<any>();
-
   useEffect(() => {
     sortingTodos(todosState, filter, searchText);
   }, [todosState, filter, searchText]);
+
+  useEffect(() => {
+    getLocalStorage();
+  }, []);
+
+  const getLocalStorage = () => {
+    const todos = localStorage.getItem("todos");
+    if (todos) {
+      dispatch(persistLocal(JSON.parse(todos)));
+    }
+  };
 
   const sortingTodos = (
     todos: Array<any>,
@@ -70,11 +86,10 @@ const Home: NextPage = () => {
       );
     }
 
-    if (searchText !== "") {
+    if (searchText.length > 0) {
       const findedTodos = sortedTodos.filter((todo) => {
         return todo.jobName.toLowerCase().includes(searchText.toLowerCase());
       });
-
       setTodos(findedTodos);
     } else setTodos(sortedTodos);
   };

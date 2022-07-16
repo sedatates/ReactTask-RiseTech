@@ -20,42 +20,31 @@ const todosSlice = createSlice({
   },
   reducers: {
     addTodo: (state, action) => {
-      console.log(action.payload);
       state.items.push(action.payload);
+      localStorage.setItem("todos", JSON.stringify(state.items));
     },
     deleteTodo: (state, action) => {
-      console.log(action.payload);
       state.items = state.items.filter(
         (item) => item.jobId !== action.payload.jobId
       );
+      localStorage.setItem("todos", JSON.stringify(state.items));
     },
-
     editTodo: (state, action) => {
-      console.log(action.payload);
       state.items.forEach((item) => {
         if (item.jobId === action.payload.jobId) {
           item.jobName = action.payload.jobName;
           item.jobUrgency = action.payload.jobUrgency;
         }
       });
+      localStorage.setItem("todos", JSON.stringify(state.items));
     },
-  },
-
-  extraReducers: {
-    // get services
-    [getCategory.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [getCategory.fulfilled]: (state, action) => {
-      state.isLoading = false;
+    persistLocal: (state, action) => {
+      console.log("persistLocal", action.payload);
       state.items = action.payload;
-    },
-    [getCategory.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.error.message;
     },
   },
 });
 
-export const { addTodo, deleteTodo, editTodo } = todosSlice.actions;
+export const { addTodo, deleteTodo, editTodo, persistLocal } =
+  todosSlice.actions;
 export default todosSlice.reducer;
