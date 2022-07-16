@@ -4,10 +4,10 @@ import React from "react";
 import styles from "./styles.module.scss";
 
 type Props = {
-  title: string;
+  title?: string;
   placeholder?: string;
-  value: string;
-  onChange: Function;
+  value?: string;
+  onChange?: Function;
   subtext?: string;
   alertvisible?: boolean;
   successvisible?: boolean;
@@ -31,7 +31,7 @@ const RiseTechInput: React.FC<Props> = ({
         className={styles.input}
         value={value}
         placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange?.(e.target.value)}
       />
 
       {alertvisible && (

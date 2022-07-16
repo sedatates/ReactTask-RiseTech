@@ -26,7 +26,7 @@ const PureHomePicker: React.FC<Props> = ({ label, onChange, type }) => {
         <Select
           defaultValue={options[0]}
           className={styles.input}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange?.(e.target.value)}
         >
           {options.map((option, index) => (
             <MenuItem key={index} value={option}>

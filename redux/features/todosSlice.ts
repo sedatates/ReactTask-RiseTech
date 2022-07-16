@@ -11,13 +11,25 @@ export const getCategory = createAsyncThunk(
   }
 );
 
+type SliceState = {
+  items: Array<{
+    jobId: number;
+    jobName: string;
+    jobUrgency: string;
+  }>;
+  isLoading: boolean;
+  error: string | null;
+};
+
 const todosSlice = createSlice({
   name: "todos",
+
   initialState: {
     items: [],
     isLoading: false,
     error: null,
-  },
+  } as SliceState,
+
   reducers: {
     addTodo: (state, action) => {
       state.items.push(action.payload);

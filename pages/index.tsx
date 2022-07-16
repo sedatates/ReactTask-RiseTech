@@ -189,7 +189,9 @@ const Home: NextPage = () => {
         type="edit"
         handleClose={() => setIsEditingDialogVisible(false)}
         handleSubmit={() => handleEditTodo(editingTodo)}
-        onChange={(e) => setEditingTodo({ ...editingTodo, ["jobUrgency"]: e })}
+        onChange={(e: any) =>
+          setEditingTodo({ ...editingTodo, ["jobUrgency"]: e })
+        }
         disabled={editingTodo.jobUrgency === "Choose"}
       />
     </div>

@@ -17,7 +17,7 @@ type Props = {
   handleSubmit: () => void;
   handleClose: () => void;
   type: "edit" | "delete";
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: Function;
   disabled?: boolean;
 };
 
