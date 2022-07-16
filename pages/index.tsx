@@ -41,6 +41,8 @@ const Home: NextPage = () => {
   const [alertvisible, setAlertvisible] = useState<boolean>(false);
   const [successvisible, setSuccessvisible] = useState<boolean>(false);
 
+  const [todos, setTodos] = useState<any>();
+
   const dispatch = useAppDispatch();
 
   const { todosState, wholeState } = useAppSelector((reducer: any) => ({
@@ -48,7 +50,6 @@ const Home: NextPage = () => {
     wholeState: reducer,
   }));
 
-  const [todos, setTodos] = useState<any>();
   useEffect(() => {
     sortingTodos(todosState, filter, searchText);
   }, [todosState, filter, searchText]);
@@ -186,6 +187,7 @@ const Home: NextPage = () => {
 
       <RiseTechDialog
         isVisible={isEditingDialogVisible}
+        editingTodo={editingTodo}
         type="edit"
         handleClose={() => setIsEditingDialogVisible(false)}
         handleSubmit={() => handleEditTodo(editingTodo)}

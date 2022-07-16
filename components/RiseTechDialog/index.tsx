@@ -19,6 +19,7 @@ type Props = {
   type: "edit" | "delete";
   onChange?: Function;
   disabled?: boolean;
+  editingTodo?: any;
 };
 
 const FormDialog: React.FC<Props> = ({
@@ -28,6 +29,7 @@ const FormDialog: React.FC<Props> = ({
   type,
   onChange,
   disabled,
+  editingTodo,
 }) => {
   return (
     <div>
@@ -39,11 +41,30 @@ const FormDialog: React.FC<Props> = ({
           <DialogContent
             sx={{
               textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <DialogContentText sx={{ fontSize: 25 }}>
-              Are You Sure?
+            <DialogContentText
+              sx={{
+                padding: 1,
+                fontSize: 20,
+                width: "100%",
+                color: "white",
+                marginBottom: 1,
+                borderRadius: 1,
+                backgroundColor: "GrayText",
+              }}
+            >
+              {editingTodo?.jobName}
             </DialogContentText>
+
+            <DialogContentText sx={{ fontSize: 20, color: "darksalmon" }}>
+              You are about to {type === "edit" ? "edit" : "delete"} a job.
+            </DialogContentText>
+
             {type === "edit" ? <RiseTechDropdown onChange={onChange} /> : null}
           </DialogContent>
           <DialogActions>
