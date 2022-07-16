@@ -20,7 +20,7 @@ import {
   persistLocal,
 } from "../redux/features/todosSlice";
 import { setTimeout } from "timers";
-import { useFocusEffect } from "@react-navigation/native";
+
 const { v4: uuidv4 } = require("uuid");
 
 const Home: NextPage = () => {
@@ -39,6 +39,7 @@ const Home: NextPage = () => {
   const [deletingTodo, setDeletingTodo] = useState<any>({});
 
   const [alertvisible, setAlertvisible] = useState<boolean>(false);
+  const [successvisible, setSuccessvisible] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -103,6 +104,10 @@ const Home: NextPage = () => {
       };
       dispatch(addTodo(param));
       setNewTodo("");
+      setSuccessvisible(true);
+      setTimeout(() => {
+        setSuccessvisible(false);
+      }, 2000);
     } else {
       setAlertvisible(true);
       setTimeout(() => {
@@ -134,8 +139,10 @@ const Home: NextPage = () => {
             title="Job Name"
             value={newTodo}
             onChange={setNewTodo}
-            subtext="Please enter job name"
+            subtext="empty job name or priority!!"
             alertvisible={alertvisible}
+            successvisible={successvisible}
+            successtext="Job Created Successfully"
           />
           <RiseTechDropdown
             label="Job Priority"

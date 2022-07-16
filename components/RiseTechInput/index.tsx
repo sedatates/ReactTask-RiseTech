@@ -1,4 +1,6 @@
-import React, { CSSProperties } from "react";
+import { CheckCircle } from "@mui/icons-material";
+import { Alert } from "@mui/material";
+import React from "react";
 import styles from "./styles.module.scss";
 
 type Props = {
@@ -8,6 +10,8 @@ type Props = {
   onChange: Function;
   subtext?: string;
   alertvisible?: boolean;
+  successvisible?: boolean;
+  successtext?: string;
 };
 
 const RiseTechInput: React.FC<Props> = ({
@@ -17,6 +21,8 @@ const RiseTechInput: React.FC<Props> = ({
   placeholder,
   value,
   onChange,
+  successvisible,
+  successtext,
 }) => {
   return (
     <div className={styles.container}>
@@ -27,9 +33,36 @@ const RiseTechInput: React.FC<Props> = ({
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
-     
-        {alertvisible && <div className="alertText">{subtext}</div>}
-      
+
+      {alertvisible && (
+        <Alert
+          sx={{
+            color: "salmon",
+            fontSize: 25,
+            alignItems: "center",
+            marginBlock: "10px",
+            borderRadius: "10px",
+          }}
+          severity="error"
+        >
+          {subtext}
+        </Alert>
+      )}
+      {successvisible && (
+        <Alert
+          icon={<CheckCircle />}
+          sx={{
+            color: "seagreen",
+            fontSize: 25,
+            alignItems: "center",
+            marginBlock: "10px",
+            borderRadius: "10px",
+          }}
+          severity="success"
+        >
+          {successtext}
+        </Alert>
+      )}
     </div>
   );
 };

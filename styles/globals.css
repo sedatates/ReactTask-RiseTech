@@ -45,6 +45,7 @@ a {
   font-weight: 100;
   color: #ff0000;
   transition: all 2s ease-in-out;
+  align-items: center;
 }
 
 
