@@ -11,25 +11,23 @@ import styles from "./styles.module.scss";
 
 type Props = {
   label: string;
-
+  value: string;
   onChange: Function;
 };
 
 const PureHomePicker: React.FC<Props> = ({ label, onChange }) => {
-  const options = boxOptions;
-
   return (
     <div className={styles.container}>
       <div className={styles.title}>{label}</div>
       <FormControl>
         <Select
-          defaultValue={options[2].key}
+          defaultValue={boxOptions[0]}
           className={styles.input}
           onChange={(e) => onChange(e.target.value)}
         >
-          {options.map((option) => (
-            <MenuItem key={option.key} value={option.key}>
-              {option.value}
+          {boxOptions.map((option, index) => (
+            <MenuItem key={index} value={option}>
+              {option}
             </MenuItem>
           ))}
         </Select>

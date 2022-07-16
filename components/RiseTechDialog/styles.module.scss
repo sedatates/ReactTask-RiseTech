@@ -1,0 +1,18 @@
+.approveButton {
+  background-color: rgb(216, 55, 146);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(216, 55, 146, 0.486);
+    color: #fff;
+  }
+}
+
+.dialog{
+  padding: 20px;
+}
