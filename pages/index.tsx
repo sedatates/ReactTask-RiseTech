@@ -55,7 +55,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     getLocalStorage();
-  });
+  }, []);
 
   const getLocalStorage = () => {
     const todos = localStorage.getItem("todos");
